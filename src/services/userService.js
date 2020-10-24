@@ -9,7 +9,7 @@ class UserService extends DataBaseService {
     async create(user) {
 
         const conflicts = await this.dataBase.manyOrNone(
-            `SELECT * from users WHERE LOWER(login) = LOWER('${user.login}') OR LOWER(email) = LOWER('${user.email}');`
+            `SELECT * from users WHERE LOWER(login) = '${user.login}';`
         ).catch(reason => console.log(reason));
 
         if (conflicts.length !== 0) {
@@ -30,8 +30,9 @@ class UserService extends DataBaseService {
     }
 
     async get(login) {
-        const user = await this.dataBase.oneOrNone(
-            `SELECT * FROM users WHERE LOWER(users.login) = LOWER('${login}');`
+        console.log(`SELECT * FROM users WHERE LOWER(users.login) = '${login}';`);
+        const user = await this.dataBase.many(
+            `SELECT * FROM users WHERE LOWER(users.login) = '${login}';`
         );
         // console.log(user);
         if (!user) {

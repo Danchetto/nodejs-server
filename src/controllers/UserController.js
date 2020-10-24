@@ -31,9 +31,9 @@ class UserController {
     }
 
     async get(ctx) {
-        const nickname = ctx.params['nickname'];
+        const login = ctx.params['login'];
 
-        const [status, result] = await userService.get(nickname);
+        const [status, result] = await userService.get(login);
 
         ctx.body = result;
         ctx.status = status;
